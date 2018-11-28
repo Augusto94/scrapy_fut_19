@@ -5,8 +5,13 @@ import scrapy
 
 from scrapy.http import Request
 
-from fut19.items import Fut19Item
-from .constants import XPATH_LINKS, XPATH_PAGINATION, XPATHS_PLAYER
+from fut19.items import Fut19Item, Fut19ItemStats, Fut19ItemPhysical
+from fut19.loaders import Fut19Loader, Fut19LoaderPhysical, Fut19LoaderStats
+from .constants import (XPATH_LINKS,
+                        XPATH_PAGINATION,
+                        XPATHS_PLAYER_INFO,
+                        XPATHS_PHYSICAL_INFO,
+                        XPATHS_STATS_INFO)
 
 
 class PlayersSpider(scrapy.Spider):
@@ -36,10 +41,9 @@ class PlayersSpider(scrapy.Spider):
     #         )
     
     def parse(self, response):
-        with open('url_players.csv', 'r') as f:
+        with open('example.csv', 'r') as f:
             links = csv.reader(f)
             for link in links:
-                # import ipdb; ipdb.set_trace()
                 yield Request(
                     link[0],
                     callback=self.extract_info_player,
@@ -47,39 +51,24 @@ class PlayersSpider(scrapy.Spider):
                 )
 
     def extract_info_player(self, response):
-        item = Fut19Item()
-        
-        item['_id'] = int(response.url.split('/')[-1])
+        loader = Fut19Loader(Fut19Item(), response)
 
-        title = response.xpath(XPATHS_PLAYER['title'])
-        item['club'] = title.xpath(XPATHS_PLAYER['club']).extract_first()
-        item['ligue'] = title.xpath(XPATHS_PLAYER['ligue']).extract_first()
-        item['nationality'] = title.xpath(XPATHS_PLAYER['nationality']).extract_first()
+        loader.add_value('_id', int(response.url.split('/')[-1]))
+        loader.add_value('link', response.url)
 
-        item['name'] = response.xpath(XPATHS_PLAYER['name']).extract_first()
-        item['rating'] = response.xpath(XPATHS_PLAYER['rating']).extract_first()
-        item['position'] = response.xpath(XPATHS_PLAYER['position']).extract_first()
-        item['price'] = response.xpath(XPATHS_PLAYER['price']).extract_first()
-        item['compared_yesterday'] = response.xpath(XPATHS_PLAYER['compared_yesterday']).extract_first()
-        item['stats'] = {
-            'pace': response.xpath(XPATHS_PLAYER['pace']).extract_first(),
-            'shoot': response.xpath(XPATHS_PLAYER['shoot']).extract_first(),
-            'passe': response.xpath(XPATHS_PLAYER['passe']).extract_first(),
-            'dribble': response.xpath(XPATHS_PLAYER['dribble']).extract_first(),
-            'defense': response.xpath(XPATHS_PLAYER['defense']).extract_first(),
-            'physicist': response.xpath(XPATHS_PLAYER['physicist']).extract_first(),
-        }
+        loader.add_xpaths(XPATHS_PLAYER_INFO)
 
-        phisical_info = response.xpath(XPATHS_PLAYER['phisical_info'])
-        item['phisical_info'] = {
-            'age': phisical_info.xpath(XPATHS_PLAYER['age']).extract_first(),
-            'height': phisical_info.xpath(XPATHS_PLAYER['height']).extract_first(),
-            'weight': phisical_info.xpath(XPATHS_PLAYER['weight']).extract_first(),
-            'workrates': phisical_info.xpath(XPATHS_PLAYER['workrates']).extract_first(),
-            'foot': phisical_info.xpath(XPATHS_PLAYER['foot']).extract_first(),
-        }
+        loader_stats = Fut19LoaderStats(Fut19ItemStats(), response)
+        loader_stats.add_xpaths(XPATHS_STATS_INFO)
+        loader.add_value('stats', loader_stats.load_item())
 
-        yield item
+        loader_physical = Fut19LoaderPhysical(
+            Fut19ItemPhysical(), response.xpath(
+                XPATHS_PLAYER_INFO['_physical_info']))
+        loader_physical.add_xpaths(XPATHS_PHYSICAL_INFO)
+        loader.add_value('physical_info', loader_physical.load_item())
+
+        yield loader.load_item()
 
 
 # with open('dump.html', 'wb') as f: f.write(response.body)
