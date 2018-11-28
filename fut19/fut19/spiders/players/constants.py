@@ -27,12 +27,12 @@ XPATHS_PLAYER_INFO = {
 }
 
 XPATHS_STATS_INFO = {
-    'pace': '//div[@class="card-19-attnum card-19-attnum1"]/text()',
-    'shoot': '//div[@class="card-19-attnum card-19-attnum2"]/text()',
-    'passe': '//div[@class="card-19-attnum card-19-attnum3"]/text()',
-    'dribble': '//div[@class="card-19-attnum card-19-attnum4"]/text()',
+    'pac': '//div[@class="card-19-attnum card-19-attnum1"]/text()',
+    'sho': '//div[@class="card-19-attnum card-19-attnum2"]/text()',
+    'pas': '//div[@class="card-19-attnum card-19-attnum3"]/text()',
+    'dri': '//div[@class="card-19-attnum card-19-attnum4"]/text()',
     'defense': '//div[@class="card-19-attnum card-19-attnum5"]/text()',
-    'physicist': '//div[@class="card-19-attnum card-19-attnum6"]/text()',
+    'phy': '//div[@class="card-19-attnum card-19-attnum6"]/text()',
 }
 
 XPATHS_PHYSICAL_INFO = {

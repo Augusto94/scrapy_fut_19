@@ -29,16 +29,17 @@ class Fut19Item(scrapy.Item):
 
     physical_info = Field()
     stats = Field()
+    stats_details = Field()
 
 
 class Fut19ItemStats(scrapy.Item):
 
-    pace = Field()
-    shoot = Field()
-    passe = Field()
-    dribble = Field()
+    pac = Field()
+    sho = Field()
+    pas = Field()
+    dri = Field()
     defense = Field()
-    physicist = Field()
+    phy = Field()
 
 
 class Fut19ItemPhysical(scrapy.Item):
