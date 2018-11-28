@@ -18,6 +18,7 @@ from .constants import (XPATH_LINKS,
                         XPATH_PAGINATION,
                         XPATHS_PLAYER_INFO,
                         XPATHS_PHYSICAL_INFO,
+                        XPATHS_STATS_INFO_GK,
                         XPATHS_STATS_DETAILS,
                         XPATHS_STATS_INFO)
 
@@ -67,7 +68,11 @@ class PlayersSpider(scrapy.Spider):
         loader.add_xpaths(XPATHS_PLAYER_INFO)
 
         loader_stats = Fut19LoaderStats(Fut19ItemStats(), response)
-        loader_stats.add_xpaths(XPATHS_STATS_INFO)
+        if response.xpath(XPATHS_PLAYER_INFO['position']).extract_first() == "GK":
+            loader_stats.add_xpaths(XPATHS_STATS_INFO_GK)
+        else:
+            loader_stats.add_xpaths(XPATHS_STATS_INFO)
+
         loader.add_value('stats', loader_stats.load_item())
 
         loader_physical = Fut19LoaderPhysical(

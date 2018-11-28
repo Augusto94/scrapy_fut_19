@@ -41,6 +41,13 @@ class Fut19ItemStats(scrapy.Item):
     defense = Field()
     phy = Field()
 
+    div = Field()
+    han = Field()
+    kic = Field()
+    ref = Field()
+    spd = Field()
+    pos = Field()
+
 
 class Fut19ItemPhysical(scrapy.Item):
 
@@ -82,3 +89,9 @@ class Fut19ItemStatsDetails(scrapy.Item):
     stamina = Field()
     strength = Field()
     aggression = Field()
+
+    gk_diving = Field()
+    gk_handling = Field()
+    gk_kicking = Field()
+    gk_reflexes = Field()
+    gk_pos = Field()

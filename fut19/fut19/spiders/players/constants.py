@@ -12,7 +12,7 @@ XPATHS_PLAYER_INFO = {
     'club': './/div[contains(@class, "col-4")][1]/a/text()',
     'ligue': './/div[contains(@class, "col-4")][2]/a/text()',
     'nationality': './/div[contains(@class, "col-4")][3]/a/text()',
-    'name': '//div[contains(@class, "name")][1]/text()',
+    'name': '//div[contains(@class, "col-4 wow fadeInLeft")]/h1/text()',
     'rating': '//div[contains(@class, "-rating")]/text()',
     'position': '//div[contains(@class, "-position")]/text()',
     'skills': 'count(//div[contains(@class, "left")]/div[@class="stars"]/*)',
@@ -33,6 +33,15 @@ XPATHS_STATS_INFO = {
     'dri': '//div[@class="card-19-attnum card-19-attnum4"]/text()',
     'defense': '//div[@class="card-19-attnum card-19-attnum5"]/text()',
     'phy': '//div[@class="card-19-attnum card-19-attnum6"]/text()',
+}
+
+XPATHS_STATS_INFO_GK = {
+    'div': '//div[@class="card-19-attnum card-19-attnum1"]/text()',
+    'han': '//div[@class="card-19-attnum card-19-attnum2"]/text()',
+    'kic': '//div[@class="card-19-attnum card-19-attnum3"]/text()',
+    'ref': '//div[@class="card-19-attnum card-19-attnum4"]/text()',
+    'spd': '//div[@class="card-19-attnum card-19-attnum5"]/text()',
+    'pos': '//div[@class="card-19-attnum card-19-attnum6"]/text()',
 }
 
 XPATHS_PHYSICAL_INFO = {

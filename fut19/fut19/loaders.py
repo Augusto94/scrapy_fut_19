@@ -101,3 +101,8 @@ class Fut19LoaderStatsDetails(Fut19Loader):
     stamina_in = MapCompose(parse_int)
     strength_in = MapCompose(parse_int)
     aggression_in = MapCompose(parse_int)
+    gk_pos_in = MapCompose(parse_int)
+    gk_diving_in = MapCompose(parse_int)
+    gk_handling_in = MapCompose(parse_int)
+    gk_kicking_in = MapCompose(parse_int)
+    gk_reflexes_in = MapCompose(parse_int)
