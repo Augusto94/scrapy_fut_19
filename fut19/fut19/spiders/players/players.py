@@ -5,12 +5,20 @@ import scrapy
 
 from scrapy.http import Request
 
-from fut19.items import Fut19Item, Fut19ItemStats, Fut19ItemPhysical
-from fut19.loaders import Fut19Loader, Fut19LoaderPhysical, Fut19LoaderStats
+from fut19.items import (Fut19Item,
+                         Fut19ItemPhysical,
+                         Fut19ItemStats,
+                         Fut19ItemStatsDetails)
+from fut19.loaders import (Fut19Loader,
+                           Fut19LoaderPhysical,
+                           Fut19LoaderStats,
+                           Fut19LoaderStatsDetails)
+from fut19.utils import parse_rating_name
 from .constants import (XPATH_LINKS,
                         XPATH_PAGINATION,
                         XPATHS_PLAYER_INFO,
                         XPATHS_PHYSICAL_INFO,
+                        XPATHS_STATS_DETAILS,
                         XPATHS_STATS_INFO)
 
 
@@ -67,6 +75,33 @@ class PlayersSpider(scrapy.Spider):
                 XPATHS_PLAYER_INFO['_physical_info']))
         loader_physical.add_xpaths(XPATHS_PHYSICAL_INFO)
         loader.add_value('physical_info', loader_physical.load_item())
+
+        ratings_row = response.xpath(XPATHS_STATS_DETAILS['_row'])
+        rating_details = []
+        loader_stats = Fut19LoaderStatsDetails(Fut19ItemStats(), response)
+        for rating_table in ratings_row:
+            rating_field = rating_table.xpath(
+                XPATHS_STATS_DETAILS['title']).extract_first().lower()
+            if rating_field == 'def':
+                rating_field = 'defense'
+
+            for idx, rating in enumerate(rating_table.xpath(XPATHS_STATS_DETAILS['_tables'])):
+                if idx == 0:
+                    loader_status_details = Fut19LoaderStatsDetails(
+                        Fut19ItemStatsDetails(), response)
+
+                rating_name = rating.xpath(
+                    XPATHS_STATS_DETAILS['rating']).extract_first()
+                rating_value = rating.xpath(
+                    XPATHS_STATS_DETAILS['rating_value']).extract_first()
+                rating_name = parse_rating_name(rating_name)
+
+                loader_status_details.add_value(rating_name, rating_value)
+
+            loader_stats.add_value(
+                rating_field, loader_status_details.load_item())
+
+        loader.add_value('stats_details', [loader_stats.load_item()])
 
         yield loader.load_item()
 

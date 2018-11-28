@@ -23,3 +23,7 @@ def count_stars(text):
 
 def parse_card(text):
     return text.split('-')[-1]
+
+
+def parse_rating_name(text):
+    return text.replace('.', '').replace(' ', '_').lower()

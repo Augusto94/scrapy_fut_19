@@ -42,3 +42,11 @@ XPATHS_PHYSICAL_INFO = {
     'workrates': './/div[contains(@class, "col")][5]/text()[2]',
     'foot': './/div[contains(@class, "col")][6]/text()[2]'
 }
+
+XPATHS_STATS_DETAILS = {
+    '_row': '//div[@class="row stats"]/div',
+    '_tables': './/div[@class="individual-stat-container"]',
+    'title': './/div[@class="title"]/div[1]/text()',
+    'rating': './div[@class="individual-stat-bar-label"]/text()',
+    'rating_value': './div[contains(@class, "textcolour")]/text()',
+}
