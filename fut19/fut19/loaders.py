@@ -4,7 +4,11 @@ from scrapy.loader import ItemLoader
 from scrapy.loader.processors import TakeFirst, MapCompose, Join
 from w3lib.html import remove_tags
 
-from fut19.utils import count_stars, parse_float, parse_int, string_digits_only
+from fut19.utils import (count_stars,
+                         parse_card,
+                         parse_float,
+                         parse_int,
+                         string_digits_only)
 
 
 class Fut19LoaderDefault(ItemLoader):
@@ -51,6 +55,7 @@ class Fut19Loader(Fut19LoaderDefault):
     rating_in = MapCompose(parse_int)
     skills_in = MapCompose(count_stars)
     weakfoot_in = MapCompose(count_stars)
+    quality_in = MapCompose(parse_card)
 
 
 class Fut19LoaderStats(Fut19Loader):

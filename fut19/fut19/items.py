@@ -21,6 +21,7 @@ class Fut19Item(scrapy.Item):
     position = Field()
     skills = Field()
     weakfoot = Field()
+    quality = Field()
     price = Field()
     compared_yesterday = Field()
     workrates_info = Field()

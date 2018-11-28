@@ -17,6 +17,7 @@ XPATHS_PLAYER_INFO = {
     'position': '//div[contains(@class, "-position")]/text()',
     'skills': 'count(//div[contains(@class, "left")]/div[@class="stars"]/*)',
     'weakfoot': 'count(//div[contains(@class, "right")]/div[@class="stars"]/*)',
+    'quality': '//div[contains(@class, "card-19 card-19")]/@class',
     'price': '//span[@class="counter"]/text()',
     'compared_yesterday': '//span[@class="green"]/text()',
     'workrates_info': ('//div[@class="physicalInfo"]'
