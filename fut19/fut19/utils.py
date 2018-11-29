@@ -27,3 +27,7 @@ def parse_card(text):
 
 def parse_rating_name(text):
     return text.replace('.', '').replace(' ', '_').lower()
+
+
+def parse_strip(text):
+    return text.strip()

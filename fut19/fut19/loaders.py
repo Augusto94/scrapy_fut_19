@@ -8,6 +8,7 @@ from fut19.utils import (count_stars,
                          parse_card,
                          parse_float,
                          parse_int,
+                         parse_strip,
                          string_digits_only)
 
 
@@ -57,6 +58,12 @@ class Fut19Loader(Fut19LoaderDefault):
     weakfoot_in = MapCompose(count_stars)
     quality_in = MapCompose(parse_card)
 
+    club_in = MapCompose(parse_strip)
+    foot_info_in = MapCompose(parse_strip)
+    ligue_in = MapCompose(parse_strip)
+    nationality_in = MapCompose(parse_strip)
+    quality_in = MapCompose(parse_strip)
+
 
 class Fut19LoaderStats(Fut19Loader):
 
@@ -68,6 +75,8 @@ class Fut19LoaderPhysical(Fut19Loader):
     age_in = MapCompose(remove_tags, parse_int)
     height_in = MapCompose(remove_tags, string_digits_only, parse_float)
     weight_in = MapCompose(remove_tags, string_digits_only, parse_int)
+    workrates_in = MapCompose(parse_strip)
+    foot_in = MapCompose(parse_strip)
 
 
 class Fut19LoaderStatsDetails(Fut19Loader):
