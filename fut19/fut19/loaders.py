@@ -56,13 +56,12 @@ class Fut19Loader(Fut19LoaderDefault):
     rating_in = MapCompose(parse_int)
     skills_in = MapCompose(count_stars)
     weakfoot_in = MapCompose(count_stars)
-    quality_in = MapCompose(parse_card)
+    quality_in = MapCompose(parse_strip, parse_card)
 
     club_in = MapCompose(parse_strip)
     foot_info_in = MapCompose(parse_strip)
     ligue_in = MapCompose(parse_strip)
     nationality_in = MapCompose(parse_strip)
-    quality_in = MapCompose(parse_strip)
 
 
 class Fut19LoaderStats(Fut19Loader):

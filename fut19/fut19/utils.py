@@ -22,7 +22,12 @@ def count_stars(text):
 
 
 def parse_card(text):
-    return text.split('-')[-1]
+    card = text.split('-')[-1]
+    import ipdb; ipdb.set_trace()
+    if card == 'nr':
+        card = text.split('-')[-2]
+
+    return card
 
 
 def parse_rating_name(text):

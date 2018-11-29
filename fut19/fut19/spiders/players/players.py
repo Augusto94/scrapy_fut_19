@@ -50,7 +50,7 @@ class PlayersSpider(scrapy.Spider):
     #         )
     
     def parse(self, response):
-        with open('example.csv', 'r') as f:
+        with open('url_players.csv', 'r') as f:
             links = csv.reader(f)
             for link in links:
                 yield Request(
