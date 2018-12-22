@@ -27,27 +27,6 @@ class PlayersSpider(scrapy.Spider):
     name = 'players'
     allowed_domains = 'https://www.futwiz.com'
     start_urls = ['https://www.futwiz.com/en/fifa19/players?page=0']
-
-    # def parse(self, response):
-    #     # import ipdb; ipdb.set_trace()
-    #     links_players = response.xpath(XPATH_LINKS).extract()
-    #     for link in links_players:
-    #         with open('url_players.csv', 'a') as csvfile:
-    #             spamwriter = csv.writer(csvfile)
-    #             spamwriter.writerow([self.allowed_domains + link])
-    #         yield Request(
-    #             self.allowed_domains + link,
-    #             callback=self.extract_info_player,
-    #             dont_filter=True
-    #         )
-
-    #     next_page = response.xpath(XPATH_PAGINATION).extract_first()
-    #     if next_page:
-    #         yield Request(
-    #             self.allowed_domains + next_page,
-    #             callback=self.parse,
-    #             dont_filter=True
-    #         )
     
     def parse(self, response):
         with open('url_players.csv', 'r') as f:
